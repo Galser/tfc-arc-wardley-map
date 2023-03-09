@@ -1,0 +1,102 @@
+title TFC
+
+anchor Business [0.98, 0.48]
+anchor Customer [0.99, 0.84]
+
+component UI [0.89, 0.55]
+component User [0.84, 0.61] label [-12, -17]
+evolve User 0.81 label [-9, -18]
+
+component Authenticaion [0.78, 0.64] label [5, -10]
+component Authorization [0.75, 0.61] label [15, 11]
+component SSO [0.69, 0.72] label [-8, -11]
+component GitHub Auth [0.72, 0.77] label [-30, -13]
+component GitHub [0.53, 0.75]
+component GitLab [0.39, 0.40] label [-9, -27]
+evolve GitLab 0.719 label [-7, -18]
+
+component HCL Auth [0.63, 0.69] label [-72, 5]
+component Azure DevOps [0.63, 0.76] label [-6, -17]
+component Org [0.81, 0.52] label [-19, -18]
+component Public Module registry [0.85, 0.43] label [-17, -58]
+
+
+component Private Module registry [0.74, 0.42] label [-14, -62]
+component Workspace [0.69, 0.45] label [16, -1]
+
+component Run [0.57, 0.29] label [-17, -18]
+component Apply [0.05, 0.68] label [10, -7]
+component Plan [0.19, 0.31] label [4, -14]
+component VCS [0.55, 0.66] label [-9, -15]
+
+component Sentinel [0.18, 0.51]
+component Cost estimation [0.29, 0.61] label [-27, -37]
+component tfc-agent [0.57, 0.38] label [9, 0]
+component agent-pools [0.61, 0.39] label [10, 1]
+component infra-resource [0.70, 0.86]
+component custom provider infra-resource [0.06, 0.20] label [8, -56]
+
+component default tfc-agent [0.54, 0.53] label [-60, 4]
+component default agent-pool [0.60, 0.52] label [0, -36]
+component Datadog - logging [0.31, 0.86] label [11, -21]
+component Custom worker image [0.40, 0.20]
+
+
+Business->UI
+Customer->UI
+Customer->infra-resource
+UI->Org
+UI->Public Module registry
+UI->User
+Org->Workspace
+Org->User
+Org->Private Module registry
+Org->VCS
+User->Authenticaion
+User->Authorization
+Workspace->agent-pools
+Workspace->default agent-pool
+Workspace->Run
+Run->Private Module registry
+Run->Public Module registry 
+Run->tfc-agent
+Run->Plan
+Run+'May use'<>Custom worker image
+Plan->Custom worker image
+Aaaply->Custom worker image
+Cost estimation->Plan
+Sentinel->Cost estimation
+Sentinel->Plan
+Apply->Sentinel
+Apply->Plan
+agent-pools->tfc-agent
+default agent-pool->default tfc-agent
+Run->default tfc-agent
+infra-resource->Apply
+Authenticaion->SSO
+Authorization->SSO
+SSO->HCL Auth
+SSO->GitHub Auth
+SSO->Azure DevOps
+VCS->Azure DevOps
+VCS->GitLab
+VCS->GitHub
+custom provider infra-resource->Apply
+
+annotation 1 [0.42, 0.59] Gitlab has their own SaaS service
+annotation 2 [0.68, 0.69] Customers often make errors in SSO config
+annotation 3 [0.09, 0.31] Debug here is very difficult and often outside our scope
+annotation 4 [0.62, 0.79] Azure DevOps can be both an auth provider and VCS
+annotation 5 [0.96, 0.32] There is a DR site for TFC, not shown here
+annotations [0.88, 0.02]
+
+note Users can be managed by SSO [0.85, 0.63]
+note Sometimes outside of our influence [0.17, 0.75]
+note Ouside of the scope, difficult to debug [0.03, 0.18]
+
+pioneers [0.45, 0.18, 0.02, 0.39]
+settlers [0.94, 0.41, 0.66, 0.65]
+townplanners [0.91, 0.74, 0.15, 0.95]
+
+style colour
+
